@@ -1,0 +1,65 @@
+
+#include <iostream>
+
+struct Item
+{
+  std::string nome;
+  int peso;
+  std::string tipo; // Pode ser "arma" ou "pocao"
+  int valor;        // Ataque ou cura
+};
+
+// Estrutura do inimigo
+struct Inimigo
+{
+  std::string nome;
+  int vida;
+  int ataque;
+};
+
+const int MaxCinto = 10;
+const int MaxCintoPeso = 50;
+
+class Cinto
+{
+public:
+  Cinto();
+  ~Cinto();
+  bool Empty();
+  bool Full();
+  void Insert(Item item, int p);
+  void Delete(Item &item, int p);
+  int Size();
+  void Clear();
+  void Retrieve(Item &item, int p);
+  void Replace(Item item, int p);
+  void ImprimirItensCinto();
+  void ImprimirPosicoesCinto();
+
+private:
+  Item Entry[MaxCinto + 1];
+  int count;
+  int countPeso;
+};
+
+class Stack
+{
+public:
+  Stack();
+  ~Stack();
+  bool Empty();
+  void Push(Item x);
+  void Pop(Item &x);
+  int Size();
+  void Clear();
+  void Top(Item &x);
+
+private:
+  struct StackNode
+  {
+    Item Entry;
+    StackNode *NextNode;
+  };
+  typedef StackNode *StackPointer;
+  StackPointer top;
+};
