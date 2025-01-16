@@ -1,0 +1,126 @@
+
+
+#include <iostream>
+#include "MochilaCinto.h"
+
+using namespace std;
+
+Cinto::Cinto()
+{
+    count = 0;
+    countPeso = 0;
+}
+
+Cinto::~Cinto()
+{
+    cout << "Cinto destruído! " << endl;
+}
+
+bool Cinto::Empty()
+{
+    return count == 0;
+}
+
+bool Cinto::Full()
+{
+    return count == MaxCinto;
+}
+
+void Cinto::Insert(Item item, int p)
+{
+    if (Full() || ((countPeso + item.peso) > MaxCintoPeso))
+    {
+        cout << "Cinto cheio! Sem espaco para novo item! " << endl;
+        abort();
+    }
+    if (p < 1 || p > count + 1)
+    {
+        cout << "Posicao invalida! " << endl;
+        abort();
+    }
+    for (int i = count; i >= p; i--)
+    {
+        Entry[i + 1] = Entry[i];
+    }
+    Entry[p] = item;
+    count++;
+    countPeso = countPeso + item.peso;
+}
+
+void Cinto::Delete(Item &item, int p)
+{
+    if (Empty())
+    {
+        cout << "Nao ha itens para remover do cinto" << endl;
+        abort();
+    }
+    if (p < 1 || p > count)
+    {
+        cout << "Posicao invalida! " << endl;
+        abort();
+    }
+
+    item = Entry[p];
+
+    if (item.tipo == "pocao")
+    {
+        for (int i = p; i < count; i++)
+        {
+            Entry[i] = Entry[i + 1];
+        }
+        count--;
+        countPeso = countPeso - item.peso;
+    }
+}
+
+int Cinto::Size()
+{
+    return count;
+}
+
+void Cinto::Clear()
+{
+    count = 0;
+}
+
+void Cinto::Retrieve(Item &item, int p)
+{
+    if (p < 1 || p > count)
+    {
+        cout << "Posicao invalida" << endl;
+        abort();
+    }
+    item = Entry[p];
+}
+
+void Cinto::Replace(Item item, int p)
+{
+    if (p < 1 || p > count)
+    {
+        cout << "Posicao invalida! " << endl;
+        abort();
+    }
+    Entry[p] = item;
+}
+
+void Cinto::ImprimirItensCinto()
+{
+    if (Empty())
+    {
+        cout << "Nao ha itens no cinto" << endl;
+        abort();
+    }
+
+    for (int i = 1; i <= count; i++)
+    {
+        cout << "Item " << i << ". Nome: " << Entry[i].nome << ". Peso: " << Entry[i].peso << ". Tipo: " << Entry[i].tipo << ". Valor: " << Entry[i].valor << endl;
+    }
+}
+
+void Cinto::ImprimirPosicoesCinto()
+{
+    for (int i = 1; i <= (count + 1); i++)
+    {
+        cout << "Posicao " << i << endl;
+    }
+}
